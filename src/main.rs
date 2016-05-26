@@ -85,11 +85,6 @@ fn is_leap_year(year: &u32) -> u32 {
     }
 }
 
-
-// 1: T is a type parameter that is used as (part of) return type
-//
-// 2: Result allows you to return either the parsed T value or
-//    the read input value with the parse error
 fn read_input(question: &str) -> String {
     let mut input = String::new();
     println!("{}", question);
