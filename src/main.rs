@@ -23,7 +23,7 @@ fn main() {
     let this_year = Local::now().year();
     let year = read_input("What year to go back to?");
     assert!(year <= this_year as u32);
-    let day_of_week = str_to_weekday(read_input_str("What day of the week are you looking for?"));
+    let day_of_week = str_to_weekday(&read_input_str("What day of the week are you looking for?"));
     let mother_day = Days::new(1, year as i32);
 
     for y in mother_day.year..this_year as u32 + 1 {
@@ -41,9 +41,7 @@ fn main() {
     }
 }
 
-fn str_to_weekday(day: String) -> Weekday {
-    // the trim is necessary here because technically our day would have a \n appended to it,
-    // since it was taking input from terminal.
+fn str_to_weekday(day: &String) -> Weekday {
     match day.to_lowercase().trim() {
         "monday" => Weekday::Mon,
         "tuesday" => Weekday::Tue,
@@ -64,6 +62,9 @@ fn get_num_days(month: &u32, year: &u32) -> u32 {
     }
 }
 
+// This function gets called if the month is February. Since February doesn't have a fixed
+// number of days, we need to determine what the number is by figuring out whether the year
+// is indeed a leap year
 fn is_leap_year(year: &u32) -> u32 {
     if year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) {
         return 29;
