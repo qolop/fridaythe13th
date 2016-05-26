@@ -18,12 +18,24 @@ impl Days {
 }
 
 fn main() {
-    let day = read_input("What number day are you looking for?");
+    let day: u32 = match read_input("What number day are you looking for?").parse() {
+        Ok(num) => num,
+        Err(_) => panic!("That's not a valid number.")
+    };
+
     assert!(day < 32);
     let this_year = Local::now().year();
-    let year = read_input("What year to go back to?");
+
+    let day_of_week = match read_input("What day of the week are you looking for?").parse() {
+            Ok(s) => str_to_weekday(&s),
+            Err(_) => panic!("That's not a valid day of the week"),
+        };
+
+    let year: u32 = match read_input("What year to go back to?").parse() {
+        Ok(num) => num,
+        Err(_) => panic!("That's not a valid year"),
+    };
     assert!(year <= this_year as u32);
-    let day_of_week = str_to_weekday(&read_input_str("What day of the week are you looking for?"));
     let mother_day = Days::new(1, year as i32);
 
     for y in mother_day.year..this_year as u32 + 1 {
@@ -73,29 +85,17 @@ fn is_leap_year(year: &u32) -> u32 {
     }
 }
 
-fn read_input(question: &str) -> u32 {
-    let mut input = String::new();
-    println!("{}", question);
-    io::stdin()
-        .read_line(&mut input)
-        .ok()
-        .expect("failed to read input");
-    match input.trim().parse() {
-        Ok(number) => {
-            return number;
-        }
-        Err(_) => {
-            panic!("Please enter a valid positive number");
-        }
-    }
-}
 
-fn read_input_str(question: &str) -> String {
+// 1: T is a type parameter that is used as (part of) return type
+//
+// 2: Result allows you to return either the parsed T value or
+//    the read input value with the parse error
+fn read_input(question: &str) -> String {
     let mut input = String::new();
     println!("{}", question);
     io::stdin()
         .read_line(&mut input)
         .ok()
         .expect("failed to read input");
-    input
+    input.trim().to_string()
 }
