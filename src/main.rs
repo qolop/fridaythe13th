@@ -23,8 +23,7 @@ fn main() {
     let this_year = Local::now().year();
     let year = read_input("What year to go back to?");
     assert!(year <= this_year as u32);
-    let day_of_week = read_input_str("What day of the week are you looking for?");
-    let day_of_week_str = str_to_weekday(day_of_week);
+    let day_of_week = str_to_weekday(read_input_str("What day of the week are you looking for?"));
     let mother_day = Days::new(1, year as i32);
 
     for y in mother_day.year..this_year as u32 + 1 {
@@ -33,7 +32,7 @@ fn main() {
             for d in 1..get_num_days(&m, &y) + 1 {
                 if day == d {
                     let dt = UTC.ymd(y as i32, m, d);
-                    if dt.weekday() == day_of_week_str {
+                    if dt.weekday() == day_of_week {
                         println!("{}", dt.format("%B %e %Y"));
                     }
                 }
