@@ -1,0 +1,9 @@
+[package]
+name = "weekday"
+version = "0.1.0"
+authors = ["qolop <mptm98@gmail.com>"]
+
+[dependencies]
+time="*"
+chrono="*"
+stopwatch="*"
